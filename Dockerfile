@@ -1,12 +1,13 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
 WORKDIR /app
 
-COPY src/VowelCount.csproj ./
+COPY src/VowelCount/VowelCount.csproj src/VowelCount/
+WORKDIR /app/src/VowelCount
 RUN dotnet restore
 
+WORKDIR /app
 COPY src/. ./src
-WORKDIR /app/src
-RUN dotnet publish -c Release -o /app/out
+RUN dotnet publish src/VowelCount/VowelCount.csproj -c Release -o /app/out
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
