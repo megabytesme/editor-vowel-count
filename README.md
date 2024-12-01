@@ -1,5 +1,5 @@
 # editor-vowel-count
-A web service which provides the average word length in a provided string.
+A web service which provides the vowel count in a provided string.
 
 ## Usage
 First, build and run the service:
