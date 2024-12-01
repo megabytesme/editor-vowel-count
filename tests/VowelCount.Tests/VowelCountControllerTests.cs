@@ -30,7 +30,7 @@ namespace VowelCount.Tests
             var client = _factory.CreateClient();
 
             // Act
-            var response = await client.GetAsync($"/vowel/countvowels{query}");
+            var response = await client.GetAsync($"/vowel-count{query}");
             var content = await response.Content.ReadAsStringAsync();
             var jsonResponse = JObject.Parse(content);
             var vowelCount = jsonResponse["vowelCount"].Value<int>();
@@ -41,21 +41,21 @@ namespace VowelCount.Tests
         }
 
         [Test]
-        [TestCase("")]
+        [TestCase("?text=")]
         public async Task CountVowels_MissingText_ReturnsBadRequest(string query)
         {
             // Arrange
             var client = _factory.CreateClient();
 
             // Act
-            var response = await client.GetAsync($"/vowel/countvowels{query}");
+            var response = await client.GetAsync($"/vowel-count{query}");
             var content = await response.Content.ReadAsStringAsync();
             var jsonResponse = JObject.Parse(content);
-            var statusCode = jsonResponse["status"].Value<int>();
+            var error = jsonResponse["errors"]["text"][0].ToString();
 
             // Assert
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.AreEqual(400, statusCode);
+            Assert.AreEqual("The text field is required.", error);
         }
     }
 }
