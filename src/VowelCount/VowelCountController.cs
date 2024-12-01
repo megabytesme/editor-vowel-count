@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 [ApiController]
-[Route("vowel")]
+[Route("vowel-count")]
 public class VowelCountController : ControllerBase
 {
-    [HttpGet("countvowels")]
+    [HttpGet]
     public IActionResult CountVowels([FromQuery] string text)
     {
         if (string.IsNullOrEmpty(text))
