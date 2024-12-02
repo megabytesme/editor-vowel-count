@@ -17,10 +17,18 @@ public class Program
                 webBuilder.ConfigureServices(services =>
                 {
                     services.AddControllers();
+                    services.AddCors(options =>
+                    {
+                        options.AddDefaultPolicy(builder =>
+                        {
+                            builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                        });
+                    });
                 });
                 webBuilder.Configure(app =>
                 {
                     app.UseRouting();
+                    app.UseCors();
                     app.UseEndpoints(endpoints =>
                     {
                         endpoints.MapControllers();
