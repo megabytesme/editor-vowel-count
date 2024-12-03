@@ -33,7 +33,7 @@ namespace VowelCount.Tests
             var response = await client.GetAsync($"/vowel-count{query}");
             var content = await response.Content.ReadAsStringAsync();
             var jsonResponse = JObject.Parse(content);
-            var vowelCount = jsonResponse["vowelCount"].Value<int>();
+            var vowelCount = jsonResponse["vowel_count"].Value<int>();
 
             // Assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);

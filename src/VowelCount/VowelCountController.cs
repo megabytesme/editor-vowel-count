@@ -10,13 +10,14 @@ public class VowelCountController : ControllerBase
     public IActionResult CountVowels([FromQuery] string text)
     {
         if (string.IsNullOrEmpty(text))
-            return Ok(0);
+            return Ok(JsonSerializer.Serialize(new { vowel_count = 0 }));
 
-        int vowelCount = text.Count(c => "aeiouAEIOU".Contains(c));
-        var result = new { vowelCount };
+        int vowel_count = text.Count(c => "aeiouAEIOU".Contains(c));
+        var result = new { vowel_count };
         var jsonResult = JsonSerializer.Serialize(result);
+        Response.ContentType = "application/json";
         Response.ContentLength = jsonResult.Length;
 
-        return Ok(jsonResult);
+        return Content(jsonResult);
     }
 }
